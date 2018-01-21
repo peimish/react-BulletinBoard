@@ -1,7 +1,7 @@
 // --------------------------------------------------------
 // 掲示板アプリのWebサーバ側
 // --------------------------------------------------------
-// データベースに接続 --- (*1)
+// NeDBデータベースに接続
 const NeDB = require('nedb')
 const path = require('path')
 const db = new NeDB({
@@ -9,7 +9,7 @@ const db = new NeDB({
   autoload: true
 })
 
-// サーバを起動 --- (*2)
+// サーバを起動
 const express = require('express')
 const app = express()
 const portNo = 3001
@@ -17,15 +17,18 @@ app.listen(portNo, () => {
   console.log('Express Server is started', `http://localhost:${portNo}`)
 })
 
-// publicディレクトリ以下は自動的に返す --- (*3)
+// publicディレクトリ以下は自動的に返す
 app.use('/public', express.static('./public'))
+
 // トップへのアクセスを/publicへ流す
 app.get('/', (req, res) => {
   res.redirect(302, '/public')
 })
 
+// --------------------------------------------------------
 // apiの定義
-// ログの取得API --- (*4)
+// --------------------------------------------------------
+// ログの取得API
 app.get('/api/getItems', (req, res) => {
   // データベースを書き込み時刻でソートして一覧を返す
   db.find({}).sort({ stime: 1 }).exec((err, data) => {
@@ -38,7 +41,7 @@ app.get('/api/getItems', (req, res) => {
   })
 })
 
-// 新規ログを書き込むAPI --- (*5)
+// 新規ログを書き込むAPI
 app.get('/api/write', (req, res) => {
   const q = req.query
   // URLパラメータの値をDBに書き込む
