@@ -45,11 +45,21 @@ class BBSForm extends Component {
             <form>
                 <div className="form-group">
                     <label htmlFor="name">名前：</label>
-                    <input className="form-control" style={styles.inputName} id='name' type='text' value={this.state.name} onChange={e => this.nameChanged(e)} /><br />
+                    <input
+                        id='name'
+                        className="form-control"
+                        style={styles.inputName}
+                        type='text'
+                        placeholder="名無しさん"
+                        value={this.state.name}
+                        onChange={e => this.nameChanged(e)}
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="comment">コメント：</label>
-                    <textarea id='comment' className="form-control"
+                    <textarea
+                        id='comment'
+                        className="form-control"
                         style={styles.textarea}
                         maxLength="10000"
                         placeholder="コメントを入力してください"
@@ -96,19 +106,32 @@ class BBSApp extends Component {
     }
     render() {
         // 発言ログの一つずつを生成する
-        const itemsHtml = this.state.items.map(e => (
-            <li key={e._id}>{e.name} - {e.body}</li>
+        let itemsHtml = this.state.items.map(e => (
+            <div>
+                {e.name}
+                < div className="panel panel-default" >
+                    <div className="panel-body" id={e._id}>{e.body}</div>
+                </div >
+            </div >
         ))
+        // TODO: コメント未入力時のハンドリング
+        if (this.state.items.map.length == 0) {
+            console.log(this.state.items.length)
+            itemsHtml = "まだコメントはありません"
+        }
         return (
             <div className="container">
                 <h2>掲示板アプリ</h2>
+                <div class="page-header">
+                    <h4>コメント</h4>
+                </div>
+                {itemsHtml}
                 <div className="panel panel-default">
                     <div className="panel-heading">コメントを入力する</div>
                     <div className="panel-body">
                         <BBSForm onPost={e => this.loadLogs()} />
                     </div>
                 </div>
-                <ul>{itemsHtml}</ul>
             </div>
         )
     }
