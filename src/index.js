@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import request from 'superagent'
+import { Button } from 'react-bootstrap';
 
 // --------------------------------------------------------
 // 掲示板アプリのClient側
@@ -41,13 +42,21 @@ class BBSForm extends Component {
     }
     render() {
         return (
-            <div style={styles.form}>
-                名前：<br />
-                <input id='name' type='text' value={this.state.name} onChange={e => this.nameChanged(e)} /><br />
-                コメント：<br />
-                <input id='comment' type='text' placeholder='コメントを入力してください' value={this.state.body} size='60' onChange={e => this.bodyChanged(e)} /><br />
-                <button onClick={e => this.post()}>投稿</button>
-            </div>
+            <form className="form-horizontal">
+                <div className="form-group">
+                    <label className="col-sm-2 control-label" htmlFor="name">名前</label>
+                    <input id='name' type='text' value={this.state.name} onChange={e => this.nameChanged(e)} /><br />
+                </div>
+                <div className="form-group">
+                    <label className="col-sm-2 control-label" htmlFor="comment">コメント</label>
+                    <input id='comment' type='text' placeholder='コメントを入力してください' value={this.state.body} size='60' onChange={e => this.bodyChanged(e)} /><br />
+                </div>
+                <div className="form-group">
+                    <div className="col-sm-2 control-label">
+                        <Button onClick={e => this.post()}>投稿</Button>
+                    </div>
+                </div>
+            </form>
         )
     }
 }
@@ -82,13 +91,18 @@ class BBSApp extends Component {
             <li key={e._id}>{e.name} - {e.body}</li>
         ))
         return (
-            <div>
-                <h1 style={styles.h1}>掲示板</h1>
-                <BBSForm onPost={e => this.loadLogs()} />
-                <p style={styles.right}>
-                    <button onClick={e => this.loadLogs()}>再読込</button>
-                </p>
-                <ul>{itemsHtml}</ul>
+            <div className="container">
+                <h2>掲示板アプリ</h2>
+                <div className="panel panel-default margin-bottom-40">
+                    <div className="panel-heading">コメントを入力する</div>
+                    <div className="panel-body">
+                        <BBSForm onPost={e => this.loadLogs()} />
+                        <p style={styles.right}>
+                            <Button onClick={e => this.loadLogs()}>再読込</Button>
+                        </p>
+                        <ul>{itemsHtml}</ul>
+                    </div>
+                </div>
             </div>
         )
     }
