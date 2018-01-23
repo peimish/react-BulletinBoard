@@ -64,14 +64,4 @@ class BBSApp extends Component {
     }
 }
 
-// スタイルを定義
-const styles = {
-    h1: {
-        backgroundColor: 'MediumBlue',
-        color: 'white',
-        fontSize: 24,
-        padding: 12
-    }
-}
-
 export default BBSApp;
