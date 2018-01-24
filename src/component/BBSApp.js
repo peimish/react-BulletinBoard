@@ -34,10 +34,10 @@ class BBSApp extends Component {
     render() {
         // 発言ログの一つずつを生成する
         let itemsHtml = this.state.items.map(e => (
-            <div>
+            <div key={e._id}>
                 {e.name}
                 < div className="panel panel-default" >
-                    <div className="panel-body" id={e._id}>{e.body}</div>
+                    <div className="panel-body">{e.body}</div>
                 </div >
             </div >
         ))
@@ -49,7 +49,7 @@ class BBSApp extends Component {
         return (
             <div className="container">
                 <h2>掲示板アプリ</h2>
-                <div class="page-header">
+                <div className="page-header">
                     <h4>コメント</h4>
                 </div>
                 {itemsHtml}

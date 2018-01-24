@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import request from 'superagent'
 import { Button } from 'react-bootstrap';
+import Dialog from 'react-bootstrap-dialog'
 
 // --------------------------------------------------------
 // 掲示板アプリのClient側
@@ -24,6 +25,11 @@ class BBSForm extends Component {
     }
     // コメントを投稿する
     post(e) {
+        // コメントの入力をチェック
+        if (this.state.body == "") {
+            this.dialog.showAlert('コメントが入力されていません')
+            return
+        }
         request
             .get('/api/write')
             .query({
@@ -75,6 +81,7 @@ class BBSForm extends Component {
                         </p>
                     </div>
                 </div>
+                <Dialog ref={(el) => { this.dialog = el }} />
             </form>
         )
     }
