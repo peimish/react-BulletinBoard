@@ -2,6 +2,7 @@
 
 # webpack
 /dist
+/public/bundle.js
 
 # dependencies
 /node_modules
@@ -25,3 +26,6 @@ yarn-error.log*
 
 # NeDB
 bbs.db
+
+# VSCode
+.vscode/*
